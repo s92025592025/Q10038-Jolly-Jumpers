@@ -1,12 +1,40 @@
-*.class
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.text.NumberFormat;
+class Main{
+	public static void main(String args[]){
+		Scanner sc=new Scanner(System.in);
+		int numbers[];
+		while(sc.hasNext()){
+			numbers=new int[sc.nextInt()];
+			for(int i=0; i<numbers.length; i++){numbers[i]=sc.nextInt();}
+			System.out.println(new JollyJumper(numbers).getString());
+		}
+	}
+}
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+class JollyJumper{
+	private int[] numbers;
+	private ArrayList abs=new ArrayList<Integer>();
+	private boolean jollyOrNot;
+	public JollyJumper(int[] numbers){
+		this.numbers=numbers;
+		cal(numbers);
+	}
+	private void cal(int[] numbers){
+		jollyOrNot=true;
+		for(int i=0; i<numbers.length-1; i++){
+			abs.add(Math.max(numbers[i], numbers[i+1])-Math.min(numbers[i], numbers[i+1]));
+		}
+		for(int i=1; i<numbers.length; i++){
+			if(abs.indexOf(i)==-1){
+				jollyOrNot=false;
+				break;
+			}
+		}
+	}
+	public String getString(){
+		if(jollyOrNot){return "Jolly";}
+		else{return "Not jolly";}
+	}
+}
